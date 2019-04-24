@@ -6,11 +6,7 @@ from flask_ask import Ask, statement, question, session
 import rospy
 import threading
 
-from std_msgs.msg import Bool
-from alexa2ros.msg import alexa_msgs
-
-__author__ = "Zhongyu Li (zli2@andrew.cmu.edu)"
-__maintain__ = "Zhongyu Li (zhongyu_li@berkeley.edu)"
+from std_msgs.msg import Bool, String
 
 """
 This node uses flask-ask server to listen on http server for a connection from Amazon Alexa Skill
@@ -37,7 +33,7 @@ def help_intent():
 def smile_intent():
 	rospy.loginfo("smile intent recived")
 	util.clear_msgs()
-	util.amsg.SMILE = True
+	util.amsg = 'happy'
 	util.pub.publish(util.amsg)
 	return statement("  ")
 
@@ -45,7 +41,7 @@ def smile_intent():
 def dance_intent():
 	rospy.loginfo("dance intent recived")
 	util.clear_msgs()
-	util.amsg.DANCE = True
+	util.amsg = 'dance'
 	util.pub.publish(util.amsg)
 	return statement(" ")
 
@@ -53,7 +49,7 @@ def dance_intent():
 def angry_intent():
 	rospy.loginfo("angry intent recived")
 	util.clear_msgs()
-	util.amsg.ANGRY = True
+	util.amsg = 'angry'
 	util.pub.publish(util.amsg)
 	return statement(" ")
 	
@@ -61,9 +57,9 @@ class Utils():
 	"""docstring for Utils"""
 	def __init__(self):
 		rospy.init_node('alexa_listener')
-		self.pub = rospy.Publisher('alexa_listener_commands', alexa_msgs, queue_size=1)
+		self.pub = rospy.Publisher('alexa_listener_commands', String, queue_size=1)
 		rospy.loginfo("alexa_listener is running....")
-		self.amsg = alexa_msgs()
+		self.amsg = String()
 
 	def clear_msgs(self):
 		self.amsg.SMILE = False 
