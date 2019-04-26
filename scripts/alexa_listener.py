@@ -32,7 +32,6 @@ def help_intent():
 @ask.intent('CassieSmile')
 def smile_intent():
 	rospy.loginfo("smile intent recived")
-	util.clear_msgs()
 	util.amsg = 'happy'
 	util.pub.publish(util.amsg)
 	return statement("  ")
@@ -40,7 +39,6 @@ def smile_intent():
 @ask.intent('CassieDance')
 def dance_intent():
 	rospy.loginfo("dance intent recived")
-	util.clear_msgs()
 	util.amsg = 'dance'
 	util.pub.publish(util.amsg)
 	return statement(" ")
@@ -48,7 +46,6 @@ def dance_intent():
 @ask.intent('CassieAngry')
 def angry_intent():
 	rospy.loginfo("angry intent recived")
-	util.clear_msgs()
 	util.amsg = 'angry'
 	util.pub.publish(util.amsg)
 	return statement(" ")
@@ -60,12 +57,6 @@ class Utils():
 		self.pub = rospy.Publisher('alexa_listener_commands', String, queue_size=1)
 		rospy.loginfo("alexa_listener is running....")
 		self.amsg = String()
-
-	def clear_msgs(self):
-		self.amsg.SMILE = False 
-		self.amsg.DANCE = False 
-		self.amsg.ANGRY = False
-		self.amsg.SAD = False
 
 
 def main():
